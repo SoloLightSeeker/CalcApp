@@ -5,6 +5,7 @@ namespace CalcLib
 {
     public static class Rest
     {
+	// перевірка числа на простоту
         public static bool IsSimple(int p)
         {
             for (int i = 2; i <= p - 2; i++)
@@ -25,6 +26,7 @@ namespace CalcLib
             }
             return true;
         }
+	// генераіція простого числа
         public static int GenerateSimple(int a)
         {
             Random random = new Random();
@@ -35,6 +37,7 @@ namespace CalcLib
                     list.Add(i);
             return list[random.Next(1, list.Count)];
         }
+	// перевіка чисел на взаємопростоту
         public static int Euclid(int a, int b)
         {
             int temp = a;
@@ -50,6 +53,7 @@ namespace CalcLib
                 b = r;
             } while (true);
         }
+	// кількість ввзаємопростих чисел до числа, що менші за число
         public static int SimpleCount(int n)
         {
             int result = n;
@@ -65,6 +69,7 @@ namespace CalcLib
                 result -= result / n;
             return result;
         }
+	// звворотній елемент для операії ділення по модулю
         public static int Reverse(int p, int a)
         {
             for (int i = 1; i < p; i++)
