@@ -1,70 +1,76 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CalcLib
 {
     public static class Rest
     {
-        public static int Add(int m, int a, int b)
+        public static bool IsSimple(int p)
         {
-            if (IsCorrect(m, a, b))
-                return (a + b) % m;
-            throw new ArgumentException("Error!");
-        }
-        public static int ReversAdd(int m, int a)
-        {
-            if (IsCorrect(m, a))
+            for (int i = 2; i <= p - 2; i++)
             {
-                for (int i = 1; i < m; i++)
-                    if ((a + i) % m == 0)
-                        return i;
+                decimal d = i;
+                try
+                {
+                    for (int j = 2; j <= p - 1; j++)
+                        d *= i;
+                    if (d % p != 1)
+                        return false;
+                }
+                catch
+                {
+                    if (p % i == 0)
+                        return false;
+                }
             }
-            throw new ArgumentException("Error!");
+            return true;
         }
-        public static int Subtract(int m, int a, int b)
+        public static int GenerateSimple(int a)
         {
-            if (IsCorrect(m, a, b))
-                return (a + ReversAdd(m, b)) % m;
-            throw new ArgumentException("Error!");
-        }
-        public static int Multiply(int m, int a, int b)
-        {
-            if (IsCorrect(m, a, b))
-                return (a * b) % m;
-            throw new ArgumentException("Error!");
-        }
-        public static int ReversMultiply(int m, int a)
-        {
-            if (IsCorrect(m, a))
-            {
-                for (int i = 1; i < m; i++)
-                    if ((a * i) % m == 1)
-                        return i;
-                throw new ArgumentException("-");
-            }
-            throw new ArgumentException("Error!");
-        }
-        public static int Division(int m, int a, int b)
-        {
-            if (IsCorrect(m, a, b))
-                return (a * ReversMultiply(m, b)) % m;
-            throw new ArgumentException("Error!");
-        }
-        public static int Pov(int m, int a, int b)
-        {
-            if (IsCorrect(m, a, b))
-            {
-                int aMult = a;
+            Random random = new Random();
+            List<int> list = new List<int>();
 
-                for (int i = 1; i < b; i++)
-                    aMult *= a;
-
-                return aMult % m;
-            }
-            throw new ArgumentException("Error!");
+            for (int i = 1; i <= a; i++)
+                if (IsSimple(i))
+                    list.Add(i);
+            return list[random.Next(1, list.Count)];
         }
-        private static bool IsCorrect(int m, int a, int b = 1)
+        public static int Euclid(int a, int b)
         {
-            return m > a && m > b && a > 0 && b > 0;
+            int temp = a;
+            a = Math.Max(a, b);
+            b = Math.Min(temp, b);
+
+            do
+            {
+                int r = a % b;
+                if (r == 0)
+                    return b;
+                a = b;
+                b = r;
+            } while (true);
+        }
+        public static int SimpleCount(int n)
+        {
+            int result = n;
+
+            for (int i = 2; i * i <= n; ++i)
+                if (n % i == 0)
+                {
+                    while (n % i == 0)
+                        n /= i;
+                    result -= result / i;
+                }
+            if (n > 1)
+                result -= result / n;
+            return result;
+        }
+        public static int Reverse(int p, int a)
+        {
+            for (int i = 1; i < p; i++)
+                if ((a * i) % p == 1)
+                    return i;
+            throw new ArgumentException("-");
         }
     }
 }
